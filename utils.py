@@ -1,5 +1,7 @@
 import cv2
 import numpy as np
+import base64
+from cryptography.fernet import Fernet
 
 def preprocess_fingerprint(image_path):
     img = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
@@ -9,20 +11,22 @@ def preprocess_fingerprint(image_path):
 def extract_features(image):
     features = cv2.findNonZero(image)
     if features is not None:
-        return features.reshape(-1, 2)
+        return np.array(features).flatten()
     return np.array([])
 
-def compare_fingerprints(image1_path, image2_path):
-    img1 = preprocess_fingerprint(image1_path)
-    img2 = preprocess_fingerprint(image2_path)
+def generate_key(features):
+    if len(features) < 32:
+        features = np.pad(features, (0, 32 - len(features)), 'constant')
+    key_bytes = features[:32].astype(np.uint8).tobytes()
+    key_base64 = base64.urlsafe_b64encode(key_bytes)
+    return key_base64.decode()
 
-    features1 = extract_features(img1)
-    features2 = extract_features(img2)
+def encrypt_data(data, key):
+    cipher = Fernet(key)
+    encrypted = cipher.encrypt(data.encode())
+    return encrypted
 
-    if features1.size == 0 or features2.size == 0:
-        return 0.0
-
-    min_len = min(len(features1), len(features2))
-    matches = np.sum(np.all(features1[:min_len] == features2[:min_len], axis=1))
-
-    return float(matches) / min_len
+def decrypt_data(encrypted_data, key):
+    cipher = Fernet(key)
+    decrypted = cipher.decrypt(encrypted_data)
+    return decrypted.decode()
