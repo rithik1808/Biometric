@@ -1,8 +1,10 @@
 from flask import Flask, request, jsonify
 from utils import preprocess_fingerprint, extract_features, generate_key, encrypt_data, decrypt_data
 import os
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 UPLOAD_FOLDER = "uploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
