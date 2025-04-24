@@ -9,6 +9,22 @@ CORS(app)
 UPLOAD_FOLDER = "uploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
+@app.route("/getKey", methods=["POST"])
+def encrypt():
+    if 'file' not in request.files:
+        return jsonify({"error": "Missing file or text"}), 400
+
+    file = request.files['file']
+
+    path = os.path.join(UPLOAD_FOLDER, file.filename)
+    file.save(path)
+
+    image = preprocess_fingerprint(path)
+    features = extract_features(image)
+    key = generate_key(features)
+
+    return jsonify({"key": key})
+
 @app.route("/encrypt", methods=["POST"])
 def encrypt():
     if 'file' not in request.files or 'text' not in request.form:
