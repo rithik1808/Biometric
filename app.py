@@ -10,7 +10,7 @@ UPLOAD_FOLDER = "uploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 @app.route("/getKey", methods=["POST"])
-def encrypt():
+def getKey():
     if 'file' not in request.files:
         return jsonify({"error": "Missing file or text"}), 400
 
