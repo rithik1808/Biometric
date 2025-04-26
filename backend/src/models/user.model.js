@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const userScheme = new mongoose.Schema(
   {
-    name: {
+    fullname: {
       type: String,
       required: true,
     },
@@ -19,6 +19,18 @@ const userScheme = new mongoose.Schema(
       type: String,
       default: "",
     },
+    isAdmin: {
+      type: Boolean,
+      default: false,
+    },
+    position: {
+      type: String,
+      default: "",
+    },
+    biometric: {
+      type: String,
+      default: "",
+    }
   },
   { timestamps: true }
 );

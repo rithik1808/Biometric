@@ -4,10 +4,26 @@ import os
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, supports_credentials=True, origins=["http://localhost:5173","https://biometric-0lyo.onrender.com"])
 
 UPLOAD_FOLDER = "uploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+
+@app.route("/getKey", methods=["POST"])
+def getKey():
+    if 'file' not in request.files:
+        return jsonify({"error": "Missing file or text"}), 400
+
+    file = request.files['file']
+
+    path = os.path.join(UPLOAD_FOLDER, file.filename)
+    file.save(path)
+
+    image = preprocess_fingerprint(path)
+    features = extract_features(image)
+    key = generate_key(features)
+
+    return jsonify({"key": key})
 
 @app.route("/encrypt", methods=["POST"])
 def encrypt():
@@ -39,8 +55,9 @@ def decrypt():
         return jsonify({"decrypted_data": decrypted})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
 if __name__ == "__main__":
     import os
     port = int(os.environ.get("PORT", 5000))
     app.run(debug=False, host="0.0.0.0", port=port)
-
+    
