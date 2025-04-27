@@ -127,6 +127,10 @@ export const signin = async (req, res) => {
 
 export const logout = (req, res) => {
   try {
+    res.setHeader("Cache-Control", "no-store, max-age=0");
+    res.setHeader("Pragma", "no-cache");
+    res.setHeader("Expires", "0");
+
     res.cookie("jwt", "", {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
