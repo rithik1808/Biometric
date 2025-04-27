@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BaseUrl = "http://localhost:5001";
+const BaseUrl = "https://biometric-nine.vercel.app";
 
 const axiosInstance = axios.create({
   baseURL: `${BaseUrl}/api`,

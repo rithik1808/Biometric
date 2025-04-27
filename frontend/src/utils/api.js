@@ -1,7 +1,6 @@
 import axiosInstance from "./axios";
 
 const API_URL = "https://biometric-0lyo.onrender.com";
-const devUrl = "http://localhost:5001";
 
 export async function getKeyFromFingerPrint(file) {
   const formData = new FormData();
