@@ -1,11 +1,11 @@
 import express from "express";
 import cors from "cors";
-import { connectDB } from "./utils/db.js";
+import { connectDB } from "./src/utils/db.js";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
-import authRoutes from "./routes/auth.routes.js";
-import uploadRoutes from "./routes/upload.routes.js";
-import updateRoutes from "./routes/update.routes.js";
+import authRoutes from "./src/routes/auth.routes.js";
+import uploadRoutes from "./src/routes/upload.routes.js";
+import updateRoutes from "./src/routes/update.routes.js";
 
 dotenv.config();
 const app = express();
