@@ -56,11 +56,12 @@ const Home = () => {
         setDocuments(resp.documents);
       }
       document.getElementById(selectedModal).showModal();
-      setLoading(false);
     } else {
       toast.error("Biometric verification failed");
-      setLoading(false);
     }
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
   };
 
   return user ? (
@@ -144,14 +145,14 @@ const Home = () => {
       </div>
       <dialog id="biometric_modal" className="modal">
         {loading ? (
-          <div className="flex items-center justify-center h-screen">
+          <div className="flex items-center justify-center h-screen z-50">
             <Loader className="size-10 animate-spin" />
           </div>
         ) : (
           <div className="modal-box flex items-center justify-center">
             <form method="dialog">
               <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
-                ✕
+                ✕  
               </button>
               <input
                 type="file"
