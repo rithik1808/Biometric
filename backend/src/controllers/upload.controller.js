@@ -1,46 +1,45 @@
 import cloudinary from "../utils/cloudinary.js";
-import fs from "fs";
-import path from "path";
 
 export const uploadFile = async (req, res) => {
   try {
     const file = req.files?.[0];
-    const filePath = file.path;
+    if (!file) {
+      return res.status(400).json({ error: "No file uploaded" });
+    }
+
     const originalName = file.originalname;
-    const ext = path.extname(originalName).toLowerCase();
-
-
-    const isImage = /\.(jpg|jpeg|png|gif|bmp|webp)$/i.test(ext);
+    const ext = originalName.split(".").pop().toLowerCase();
+    const isImage = ["jpg", "jpeg", "png", "gif", "bmp", "webp"].includes(ext);
     const resourceType = isImage ? "image" : "raw";
 
+    const result = await new Promise((resolve, reject) => {
+      const uploadStream = cloudinary.uploader.upload_stream(
+        {
+          resource_type: resourceType,
+          folder: "uploads",
+          public_id: originalName.split(".")[0],
+          use_filename: true,
+          unique_filename: false,
+        },
+        (error, result) => {
+          if (error) reject(error);
+          else resolve(result);
+        }
+      );
 
-    const publicId = path.parse(originalName).name;
-    const finalPublicId =
-      resourceType === "raw" ? `${publicId}${ext}` : publicId;
-
-    const result = await cloudinary.uploader.upload(filePath, {
-      resource_type: resourceType,
-      folder: "uploads",
-      public_id: finalPublicId,
-      use_filename: true,
-      unique_filename: false,
+      uploadStream.end(file.buffer);
     });
-
-    fs.unlinkSync(filePath);
-
-    console.log(result);
 
     res.json({
       originalName: originalName,
       url: result.secure_url,
-      secure_url: result.secure_url,
       public_id: result.public_id,
       format: result.format || ext || "",
       resource_type: result.resource_type,
-      display_name: result.display_name,
       bytes: result.bytes,
     });
   } catch (err) {
+    console.error("Upload error:", err);
     res.status(500).json({ error: err.message });
   }
 };
