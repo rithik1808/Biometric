@@ -13,7 +13,17 @@ const Navbar = () => {
 
   const handleLogout = async () => {
     await logout();
+    document.cookie =
+      "jwt=; path=/; domain=.yourdomain.com; " +
+      "expires=Thu, 01 Jan 1970 00:00:00 UTC; " +
+      (window.location.protocol === "https:" ? "secure; " : "") +
+      "samesite=none; partitioned";
+
+    localStorage.removeItem("authState");
     navigate("/login");
+
+    window.location.reload(true);
+    
     toast.success("Logged out successfully");
   };
 
