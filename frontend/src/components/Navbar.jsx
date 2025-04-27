@@ -18,13 +18,9 @@ const Navbar = () => {
       "expires=Thu, 01 Jan 1970 00:00:00 UTC; " +
       (window.location.protocol === "https:" ? "secure; " : "") +
       "samesite=none; partitioned";
-
     localStorage.removeItem("authState");
-    navigate("/login");
-
-    window.location.reload(true);
-    
     toast.success("Logged out successfully");
+    window.location.reload(true);
   };
 
   return (
