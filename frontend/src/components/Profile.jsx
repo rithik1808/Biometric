@@ -11,7 +11,7 @@ const Profile = (props) => {
         <div className="avatar">
           <div className="ring-primary ring-offset-base-100 w-24 rounded-full ring ring-offset-2">
             {props.user.profilePic ? (
-              <img src={props.profilePic} alt="" />
+              <img src={props.user.profilePic} alt="" />
             ) : (
               <img
                 src="https://st5.depositphotos.com/81334134/76950/v/450/depositphotos_769508200-stock-illustration-man-profile-vector-professional-male.jpg"

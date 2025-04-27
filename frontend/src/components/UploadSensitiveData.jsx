@@ -50,7 +50,7 @@ function UploadSensitiveData(props) {
         encrypted_fileUrl.encrypted_data,
         fileUploadRes.format,
         fileUploadRes.public_id,
-        props.user._id
+        props.user.fullname + " (" + props.user.position + ")"
       );
 
       if (updateDocument.document) {

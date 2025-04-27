@@ -112,8 +112,8 @@ const Home = () => {
             />
           </figure>
           <div className="card-body">
-            <h2 className="card-title">View All</h2>
-            <p>You can view all your sensitive data and documents here</p>
+            <h2 className="card-title">View Documents</h2>
+            <p>You can view all your sensitive data and documents uploaded by you</p>
           </div>
         </button>
         <dialog id="my_modal_2" className="modal">

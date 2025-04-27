@@ -71,8 +71,8 @@ const AdminHome = () => {
             />
           </figure>
           <div className="card-body">
-            <h2 className="card-title">View All</h2>
-            <p>You can view all your sensitive data and documents here</p>
+            <h2 className="card-title">View All Documents</h2>
+            <p>You can view all sensitive data and documents here</p>
           </div>
         </button>
         <dialog id="my_modal_2" className="modal">

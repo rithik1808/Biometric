@@ -3,6 +3,7 @@ import FileImage from "../assets/File.png";
 import { formatDateGroup } from "../utils/utils";
 import { decryptFingerprint } from "../utils/api";
 import { Loader } from "lucide-react";
+import toast from "react-hot-toast";
 
 const Document = ({ doc, biometric }) => {
   const [loading, setLoading] = React.useState(false);
@@ -11,14 +12,23 @@ const Document = ({ doc, biometric }) => {
 
   const handleViewDocument = async () => {
     setLoading(true);
-    const urlDecryptResponse = await decryptFingerprint(
-      doc.documentUrl,
-      doc.biometric
-    );
-    setFileUrl(urlDecryptResponse.decrypted_data);
-    const textDecryptResponse = await decryptFingerprint(doc.text, doc.biometric);
-    setFileDescription(textDecryptResponse.decrypted_data);
-    document.getElementById(doc._id).showModal();
+    try {
+      const urlDecryptResponse = await decryptFingerprint(
+        doc.documentUrl,
+        doc.biometric
+      );
+      setFileUrl(urlDecryptResponse.decrypted_data);
+      const textDecryptResponse = await decryptFingerprint(
+        doc.text,
+        doc.biometric
+      );
+      setFileDescription(textDecryptResponse.decrypted_data);
+      document.getElementById(doc._id).showModal();
+    } catch (error) {
+      console.error("Error decrypting document:", error);
+      setFileDescription("Error decrypting document");
+      toast.error("Error decrypting document");
+    }
     setLoading(false);
   };
 

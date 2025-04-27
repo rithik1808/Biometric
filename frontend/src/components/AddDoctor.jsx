@@ -35,6 +35,18 @@ const AddDoctor = () => {
     };
 
     const response = await addDoctor(data);
+
+    if(response.success){
+      toast.success("Doctor added successfully");
+      document.getElementById("my_modal_1").close();
+      setFullName("");
+      setEmail("");
+      setPassword("");
+      setPosition("");
+      setProfilePic(null);
+      setBiometric(null);
+    }
+
     console.log(response);
   };
 
