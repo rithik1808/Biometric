@@ -1,9 +1,7 @@
 import axios from "axios";
 
-const BaseUrl = "https://biometric-nine.vercel.app";
-
 const axiosInstance = axios.create({
-  baseURL: `${BaseUrl}/api`,
+  baseURL: `${import.meta.env.VITE_BACKEND_URL}/api`,
   withCredentials: true,
 });
 
