@@ -4,7 +4,7 @@ import os
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app, supports_credentials=True, origins=["http://localhost:5173","https://biometric-0lyo.onrender.com"])
+CORS(app, supports_credentials=True, origins=["http://localhost:5173","https://biometric-0lyo.onrender.com","https://biometric-frontend-five.vercel.app"])
 
 UPLOAD_FOLDER = "uploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
