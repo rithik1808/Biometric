@@ -7,7 +7,9 @@ import toast from "react-hot-toast";
 
 const Document = ({ doc, biometric }) => {
   const [loading, setLoading] = React.useState(false);
-  const [fileDescription, setFileDescription] = React.useState(doc.text);
+  const [fileDescription, setFileDescription] = React.useState(
+    doc.documentDescription
+  );
   const [fileUrl, setFileUrl] = React.useState(doc.documentUrl);
 
   const handleViewDocument = async () => {
@@ -19,7 +21,7 @@ const Document = ({ doc, biometric }) => {
       );
       setFileUrl(urlDecryptResponse.decrypted_data);
       const textDecryptResponse = await decryptFingerprint(
-        doc.text,
+        doc.documentDescription,
         doc.biometric
       );
       setFileDescription(textDecryptResponse.decrypted_data);

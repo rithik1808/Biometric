@@ -14,7 +14,7 @@ export const updateDocument = async (req, res) => {
     } = req.body;
 
     const newDocument = new Document({
-      text: text,
+      documentDescription: text,
       biometric: biometric,
       documentName: originalName,
       documentUrl: secure_url,

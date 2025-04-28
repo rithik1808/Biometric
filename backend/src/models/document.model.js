@@ -22,7 +22,7 @@ const documentScheme = new mongoose.Schema(
       type: Number,
       default: 0,
     },
-    text: {
+    documentDescription: {
       type: String,
       default: "",
     },
